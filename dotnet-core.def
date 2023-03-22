@@ -19,6 +19,7 @@ Stage: final
 
 %environment
 	export LC_ALL=C
+	export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 %runscript
 	exec /bin/bash
