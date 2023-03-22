@@ -1,27 +1,24 @@
 BootStrap: docker
-From: debian:bookworm-slim
+From: debian:bullseye-slim
+Stage: final
 
 %help
-This is a Singularity enviroment for dotnet-core.
+	This is a Singularity enviroment for dotnet-core.
 
 %labels
-Maintainer Klemen Berkovic
-Version v1.0
+	Maintainer Klemen Berkovic
+	Version v1.0
 
 %post
-export DEBIAN_FRONTEND=noninteractive LC_ALL=C
-apt-get update
-apt-get install -y -q \
-    build-essential \
-	 wget \
-	 git \
-	 bash
-wget https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-dpkg -i packages-microsoft-prod.deb
-rm packages-microsoft-prod.deb
-apt-get update
-apt-get install -y apt-transport-https && apt-get update
-apt-get install -y dotnet-sdk-6.0 aspnetcore-runtime-6.0
+	export DEBIAN_FRONTEND=noninteractive LC_ALL=C
+	apt update && apt install -y -q git vim curl bash make
+	curl -o packages-microsoft-prod.deb https://packages.microsoft.com/config/debian/11/packages-microsoft-prod.deb 
+	dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
+	apt update && apt install -y apt-transport-https
+	apt update && apt install -y dotnet-sdk-6.0 aspnetcore-runtime-6.0
+
+%environment
+	export LC_ALL=C
 
 %runscript
-exec /bin/bash
+	exec /bin/bash
